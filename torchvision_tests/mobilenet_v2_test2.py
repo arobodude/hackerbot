@@ -33,37 +33,44 @@ frame_count = 0
 with open('imagenet1000_clsidx_to_labels.txt') as f:
     classes = ast.literal_eval(f.read()) 
 
-#classes = ast.literal_eval(requests.get("https://gist.githubusercontent.com/yrevar/942d3a0ac09ec9e5eb3a/raw/238f720ff059c1f82f368259d1ca4ffa5dd8f9f5/imagenet1000_clsidx_to_labels.txt").content.decode('utf8'))
+fps = 0.0
 
 with torch.no_grad():
     while True:
-        # read frame
+        # Read frame
         ret, image = cap.read()
         if not ret:
             raise RuntimeError("failed to read frame")
 
-        # convert opencv output from BGR to RGB
+        # Convert opencv output from BGR to RGB
         image = image[:, :, [2, 1, 0]]
         permuted = image
 
-        # preprocess
+        # Preprocess
         input_tensor = preprocess(image)
 
-        # create a mini-batch as expected by the model
+        # Create a mini-batch as expected by the model
         input_batch = input_tensor.unsqueeze(0)
 
-        # run model
+        # Run model
         output = net(input_batch)
         # do something with output ...
 
-        # log model performance
+        # Clear the screen to print updated results
+        # os.system('clear')
+
+        # Log model performance and print the current fps
         frame_count += 1
         now = time.time()
         if now - last_logged > 1:
-            print(f"{frame_count / (now-last_logged)} fps")
+            fps = f"{frame_count / (now-last_logged)} fps"
+            print(fps)
             last_logged = now
             frame_count = 0
+        else:
+            print(fps)
 
+        # Print top 10 classes
         top = list(enumerate(output[0].softmax(dim=0)))
         top.sort(key=lambda x: x[1], reverse=True)
         os.system('clear')
