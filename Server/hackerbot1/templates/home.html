@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Example</title>
+</head>
+<Body>
+    <h1>Hacker Bot</h1>
+    <form method="POST" action="{% url 'print_command' %}">
+        {% csrf_token %}
+        <label for="input_text">Enter Command:</label>
+        <input type="text" id="input_text" name="input_text">
+        <button type="submit">Submit</button>
+    </form>
+</Body>
+</html>
