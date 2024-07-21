@@ -50,7 +50,7 @@
         }
     </style>
     <script>
-        function startProcess() {
+        function send_command() {
             const textInput = document.getElementById('text_input').value;
             fetch("{% url 'send_command' %}", {
                 method: 'POST',
