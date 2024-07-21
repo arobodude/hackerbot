@@ -17,5 +17,16 @@ def send_command(request):
         return JsonResponse({'status': 'Processing started'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
 
+def send_move_command(request):
+    if request.method == 'POST':
+        x_coord = request.POST.get("x_ccord")
+        y_coord = request.POST.get("y_ccord")
+        angle = request.POST.get("angle")
+        speed = request.POST.get("speed")
+        hackbot_command(f"GOTO,{x_coord},{y_coord},{angle},{speed}")
+        return JsonResponse({'status': 'Processing started'})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
 def home(request):
     return render(request, 'home.html')
