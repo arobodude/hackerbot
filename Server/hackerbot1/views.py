@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import hackerbot_commands as hb
+import hackerbot1.hackerbot_commands as hb
 import sys
 
 def print_command(request):
