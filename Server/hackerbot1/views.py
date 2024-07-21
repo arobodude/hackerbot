@@ -2,13 +2,10 @@ from django.shortcuts import render
 import hackerbot1.hackerbot_commands as hb
 import sys
 from django.http import JsonResponse
-import threading
 
-def hackbot_command(request):
-    if request.method == 'POST':
-        input_text = request.POST.get('input_text')
-        print("Button was clicked!", file=sys.stdout)
-        hb.send_command(input_text)
+def hackbot_command(command):
+    print("Button was clicked!", file=sys.stdout)
+    hb.send_command(command)
 
 def send_command(request):
     if request.method == 'POST':
@@ -19,11 +16,12 @@ def send_command(request):
 
 def send_move_command(request):
     if request.method == 'POST':
-        x_coord = request.POST.get("x_ccord")
-        y_coord = request.POST.get("y_ccord")
+        x_coord = request.POST.get("x_coord")
+        y_coord = request.POST.get("y_coord")
         angle = request.POST.get("angle")
         speed = request.POST.get("speed")
-        hackbot_command(f"GOTO,{x_coord},{y_coord},{angle},{speed}")
+        command = f"GOTO,{x_coord},{y_coord},{angle},{speed}"
+        hackbot_command(command)
         return JsonResponse({'status': 'Processing started'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
 
