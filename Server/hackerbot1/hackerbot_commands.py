@@ -3,7 +3,7 @@ import threading
 
 class SerialDevice:
     def __init__(self):
-        self.ser = serial.Serial('/dev/ttyAMC0', 230400)
+        self.ser = serial.Serial(port='/dev/ttyACM0', baudrate=230400)
         #self.read_thread = threading.Thread(target=self.read_serial)
         #self.read_thread.daemon = True
         #self.read_thread.start()
