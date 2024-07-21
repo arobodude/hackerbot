@@ -70,6 +70,33 @@
                 document.getElementById('status_message').textContent = 'An error occurred';
             });
         }
+
+        function send_move_command() {
+            const xcoordInput = document.getElementById('x_coord').value;
+            const ycoordInput = document.getElementById('y_coord').value;
+            const angleInput = document.getElementById('angle').value;
+            const speedInput = document.getElementById('speed').value;
+            fetch("{% url 'send_move_command' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams({
+                    'x_coord': xcoordInput
+                    'y_coord': ycoordInput
+                    'angle': angleInput
+                    'speed': speedInput
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status_message').textContent = data.status;
+            })
+            .catch(error => {
+                document.getElementById('status_message').textContent = 'An error occurred';
+            });
+        }
     </script>
 </head>
 <Body>
