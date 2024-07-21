@@ -19,10 +19,10 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.status);
+                document.getElementById('status_message').textContent = data.status;
             })
             .catch(error => {
-                console.error('Error:', error);
+                document.getElementById('status_message').textContent = 'An error occurred';
             });
         }
     </script>
