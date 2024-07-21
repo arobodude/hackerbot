@@ -1,11 +1,13 @@
 from django.shortcuts import render
-import hackerbot1.hackerbot_commands as hb
+import hackerbot.hackerbot_commands as hb
 import sys
 from django.http import JsonResponse
+
 
 def hackbot_command(command):
     print("Button was clicked!", file=sys.stdout)
     hb.send_command(command)
+
 
 def send_command(request):
     if request.method == 'POST':
@@ -13,6 +15,7 @@ def send_command(request):
         hackbot_command(text)
         return JsonResponse({'status': 'Processing started'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
+
 
 def send_move_command(request):
     if request.method == 'POST':
